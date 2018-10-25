@@ -144,15 +144,24 @@ module.exports = function (event, context) {
       let lockstate = event.payload.lockState
       if (strHeader === 'GetLockStateRequest') {
         getDev(applianceId, what, function (callback) {
-          let GetPayload = {
-            lockState: 'LOCKED'
-          }
+          strConf = strHeader.replace('Request', 'Response')
           headers = makeHeader(event, strConf)
           if (callback === 'Err') {
             headers.name = 'TargetOfflineError'
             payload = {}
+          } else if (callback === 'Closed') {
+            payload = {
+              lockState: 'LOCKED'
+            }
+          } else if (callback === 'Opened') {
+            payload = {
+              lockState: 'UNLOCKED'
+            }
+          } else {
+            payload = {
+              lockState: callback
+            }
           }
-          payload = callback
           let result = {
             header: headers,
             payload: payload
