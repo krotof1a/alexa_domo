@@ -43,7 +43,10 @@ module.exports = function (idx, devType, sendback) {
         } else if (devType === 'light') {
           callBackString = device.level
         } else if (devType === 'lock') {
-          callBackString = device.state
+          if (device.state)
+            callBackString = device.state
+          else
+            callBackString = device.status
         }
         sendback(callBackString)
       }
