@@ -80,6 +80,26 @@ module.exports = function (event, context, passBack) {
             SceneIDX: parseInt(device.idx) + 200
           })
           appliances.push(appliancename)
+        } else if (devType.startsWith('Blind') || devType.startsWith('RFY') || setSwitch.startsWith('Blind')) {
+          appliancename.actions = ([
+            'turnOn',
+            'turnOff'
+          ])
+          appliancename.additionalApplianceDetails = ({
+            switchis: setSwitch,
+            WhatAmI: 'blind'
+          })
+          appliances.push(appliancename)
+        } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || setSwitch.startsWith('Contact')) {
+          appliancename.actions = ([
+            'getLockState',
+            'setLockState'
+          ])
+          appliancename.additionalApplianceDetails = ({
+            switchis: setSwitch,
+            WhatAmI: 'lock'
+          })
+          appliances.push(appliancename)
         } else if (devType.startsWith('Light')) {
           appliancename.actions = ([
             'incrementPercentage',
@@ -94,26 +114,6 @@ module.exports = function (event, context, passBack) {
             maxDimLevel: device.maxDimLevel,
             switchis: setSwitch,
             WhatAmI: 'light'
-          })
-          appliances.push(appliancename)
-        } else if (devType.startsWith('Blind') || devType.startsWith('RFY')) {
-          appliancename.actions = ([
-            'turnOn',
-            'turnOff'
-          ])
-          appliancename.additionalApplianceDetails = ({
-            switchis: setSwitch,
-            WhatAmI: 'blind'
-          })
-          appliances.push(appliancename)
-        } else if (devType.startsWith('Lock') || devType.startsWith('Contact')) {
-          appliancename.actions = ([
-            'getLockState',
-            'setLockState'
-          ])
-          appliancename.additionalApplianceDetails = ({
-            switchis: setSwitch,
-            WhatAmI: 'lock'
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Temp') || devType.startsWith('Therm')) {
