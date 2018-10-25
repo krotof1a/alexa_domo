@@ -67,9 +67,10 @@ module.exports = function (event, context, passBack) {
         }
 
         if (devType.startsWith('Scene') || devType.startsWith('Group')) {
-          appliancename.manufacturerName = device.name,
-          appliancename.modelName = device.name,
-          appliancename.version = device.idx,
+          appliancename.applianceTypes = (['SCENE_TRIGGER'])
+          appliancename.manufacturerName = device.name
+          appliancename.modelName = device.name
+          appliancename.version = device.idx
           appliancename.applianceId = 'scene_' + device.idx
           appliancename.actions = ([
             'turnOn',
@@ -81,6 +82,7 @@ module.exports = function (event, context, passBack) {
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Blind') || devType.startsWith('RFY') || (setSwitch && setSwitch.startsWith('Blind'))) {
+          appliancename.applianceTypes = (['SWITCH'])
           appliancename.actions = ([
             'turnOn',
             'turnOff'
@@ -91,6 +93,7 @@ module.exports = function (event, context, passBack) {
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || (setSwitch && setSwitch.startsWith('Contact'))) {
+          appliancename.applianceTypes = (['SWITCH'])
           appliancename.actions = ([
             'getLockState',
             'setLockState'
@@ -101,6 +104,7 @@ module.exports = function (event, context, passBack) {
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Light')) {
+          appliancename.applianceTypes = (['LIGHT'])
           appliancename.actions = ([
             'incrementPercentage',
             'decrementPercentage',
@@ -117,6 +121,7 @@ module.exports = function (event, context, passBack) {
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Temp') || devType.startsWith('Therm')) {
+          appliancename.applianceTypes = (['THERMOSTAT'])
           appliancename.version = 'temp'
           appliancename.actions = ([
             'getTargetTemperature',
