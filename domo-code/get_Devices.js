@@ -80,7 +80,7 @@ module.exports = function (event, context, passBack) {
             SceneIDX: parseInt(device.idx) + 200
           })
           appliances.push(appliancename)
-        } else if (devType.startsWith('Blind') || devType.startsWith('RFY') || setSwitch.startsWith('Blind')) {
+        } else if (devType.startsWith('Blind') || devType.startsWith('RFY') || (setSwitch && setSwitch.startsWith('Blind'))) {
           appliancename.actions = ([
             'turnOn',
             'turnOff'
@@ -90,7 +90,7 @@ module.exports = function (event, context, passBack) {
             WhatAmI: 'blind'
           })
           appliances.push(appliancename)
-        } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || setSwitch.startsWith('Contact')) {
+        } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || (setSwitch && setSwitch.startsWith('Contact'))) {
           appliancename.actions = ([
             'getLockState',
             'setLockState'
