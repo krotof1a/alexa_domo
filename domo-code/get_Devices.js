@@ -93,7 +93,7 @@ module.exports = function (event, context, passBack) {
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || (setSwitch && setSwitch.startsWith('Contact'))) {
-          appliancename.applianceTypes = (['SWITCH'])
+          appliancename.applianceTypes = (['SMARTLOCK'])
           appliancename.actions = ([
             'getLockState',
             'setLockState'
