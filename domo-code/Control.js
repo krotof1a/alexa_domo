@@ -63,20 +63,22 @@ module.exports = function (event, context) {
       })
       break
     case 'light':
-      switchtype = 'switch'
       if (strHeader === 'TurnOnRequest') {
         if (switchtype && switchtype.startsWith('Push Off')) {
           funcName = 'Off'
         } else {
           funcName = 'On'
         }
+        switchtype = 'switch'
       } else if (strHeader === 'TurnOffRequest') {
         if (switchtype && switchtype.startsWith('Push On')) {
           funcName = 'On'
         } else {
           funcName = 'Off'
         }
+        switchtype = 'switch'
       } else if (strHeader === 'SetColorTemperatureRequest') {
+        switchtype = 'switch'
         let kelvin = event.payload.colorTemperature.value
 
         ctrlKelvin(applianceId, kelvin, function (callback) {
@@ -93,7 +95,7 @@ module.exports = function (event, context) {
         })
         break
       } else if (strHeader === 'SetColorRequest') {
-
+        switchtype = 'switch'
         let intHue = event.payload.color.hue
         let intBright = event.payload.color.brightness
         let intSat = event.payload.color.saturation
