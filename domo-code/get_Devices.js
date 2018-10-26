@@ -105,12 +105,9 @@ module.exports = function (event, context, passBack) {
           appliances.push(appliancename)
         } else if (devType.startsWith('Light')) {
           appliancename.applianceTypes = (['LIGHT'])
-          if (setSwitch && setSwitch.startsWith('Push On')) {
+          if (setSwitch && setSwitch.startsWith('Push')) {
             appliancename.actions = ([
-              'turnOn'
-            ])
-          } else if (setSwitch && setSwitch.startsWith('Push Off')) {
-            appliancename.actions = ([
+              'turnOn',
               'turnOff'
             ])
           } else {
