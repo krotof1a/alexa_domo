@@ -104,13 +104,19 @@ module.exports = function (event, context, passBack) {
           })
           appliances.push(appliancename)
         } else if (devType.startsWith('Light')) {
-          appliancename.applianceTypes = (['LIGHT'])
           if (setSwitch && setSwitch.startsWith('Push')) {
+            appliancename.applianceTypes = (['LIGHT'])
+            appliancename.actions = ([
+              'turnOn',
+              'turnOff'
+            ])
+          } else if (setSwitch && (setSwitch.startsWith('Selector') || setSwitch.startsWith('Media') )) {
             appliancename.actions = ([
               'turnOn',
               'turnOff'
             ])
           } else {
+            appliancename.applianceTypes = (['LIGHT'])
             appliancename.actions = ([
               'incrementPercentage',
               'decrementPercentage',
