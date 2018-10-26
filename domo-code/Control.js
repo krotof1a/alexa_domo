@@ -65,9 +65,17 @@ module.exports = function (event, context) {
     case 'light':
       switchtype = 'switch'
       if (strHeader === 'TurnOnRequest') {
-        funcName = 'On'
+        if (switchtype && switchtype.startsWith('Push Off')) {
+          funcName = 'Off'
+        } else {
+          funcName = 'On'
+        }
       } else if (strHeader === 'TurnOffRequest') {
-        funcName = 'Off'
+        if (switchtype && switchtype.startsWith('Push On')) {
+          funcName = 'On'
+        } else {
+          funcName = 'Off'
+        }
       } else if (strHeader === 'SetColorTemperatureRequest') {
         let kelvin = event.payload.colorTemperature.value
 
