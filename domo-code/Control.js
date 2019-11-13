@@ -39,6 +39,29 @@ module.exports = function (event, context) {
   var headers = makeHeader(event, strConf)
 
   switch (what) {
+    case 'inverted_blind':
+      switchtype = 'switch'
+      if (strHeader === 'TurnOnRequest') {
+        funcName = 'On'
+      } else if (strHeader === 'TurnOffRequest') {
+        funcName = 'Off'
+      }
+      ctrlDev(switchtype, applianceId, funcName, function (callback) {
+        let payload
+        payload = callback
+
+        if (callback === 'Err') {
+          headers.name = 'TargetOfflineError'
+          payload = {}
+        }
+        let result = {
+          header: headers,
+          payload: payload
+        }
+        console.log(result)
+        context.succeed(result)
+      })
+      break
     case 'blind':
       switchtype = 'switch'
       if (strHeader === 'TurnOnRequest') {
