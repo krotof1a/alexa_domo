@@ -81,16 +81,22 @@ module.exports = function (event, context, passBack) {
             SceneIDX: parseInt(device.idx) + 200
           })
           appliances.push(appliancename)
-        } else if (devType.startsWith('Blind') || devType.startsWith('RFY') || (setSwitch && setSwitch.startsWith('Blind'))) {
+        } else if (devType.endsWith('Blinds') || devType.startsWith('RFY') || (setSwitch && setSwitch.endsWith('Blinds'))) {
           appliancename.applianceTypes = (['SWITCH'])
           appliancename.actions = ([
             'turnOn',
             'turnOff'
           ])
-          appliancename.additionalApplianceDetails = ({
-            switchis: setSwitch,
-            WhatAmI: 'blind'
-          })
+          if (devType.startsWith('Inverted'))
+            appliancename.additionalApplianceDetails = ({
+              switchis: setSwitch,
+              WhatAmI: 'inverted_blind'
+            }) 
+          else
+            appliancename.additionalApplianceDetails = ({
+              switchis: setSwitch,
+              WhatAmI: 'blind'
+            })
           appliances.push(appliancename)
         } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || (setSwitch && setSwitch.startsWith('Contact'))) {
           appliancename.applianceTypes = (['SMARTLOCK'])
