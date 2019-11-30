@@ -55,7 +55,8 @@ module.exports = function (event, context, passBack) {
           }
         }
         // let msg = ("device is - ", device.name, " & description", devName);
-          // log("device info", msg);
+        // log("device info", msg);
+        
         let appliancename = {
           applianceId: device.idx,
           manufacturerName: device.hardwareName,
@@ -81,22 +82,23 @@ module.exports = function (event, context, passBack) {
             SceneIDX: parseInt(device.idx) + 200
           })
           appliances.push(appliancename)
-        } else if (devType.startsWith('Blinds') || devType.startsWith('RFY') || (setSwitch && setSwitch.startsWith('Blinds'))) {
+        } else if (devType.toLowerCase().includes('blinds') || devType.startsWith('RFY') || (setSwitch && setSwitch.toLowerCase().includes('blinds'))) {
           appliancename.applianceTypes = (['SWITCH'])
           appliancename.actions = ([
             'turnOn',
             'turnOff'
           ])
-          if (devType.endsWith('Inverted'))
+          if (setSwitch.toLowerCase().includes('inverted')) {
             appliancename.additionalApplianceDetails = ({
               switchis: setSwitch,
               WhatAmI: 'inverted_blind'
             }) 
-          else
+          } else {
             appliancename.additionalApplianceDetails = ({
               switchis: setSwitch,
               WhatAmI: 'blind'
             })
+          }
           appliances.push(appliancename)
         } else if (devType.startsWith('Lock') || devType.startsWith('Contact') || (setSwitch && setSwitch.startsWith('Contact'))) {
           appliancename.applianceTypes = (['SMARTLOCK'])
