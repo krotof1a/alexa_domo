@@ -81,13 +81,13 @@ module.exports = function (event, context, passBack) {
             SceneIDX: parseInt(device.idx) + 200
           })
           appliances.push(appliancename)
-        } else if (devType.endsWith('Blinds') || devType.startsWith('RFY') || (setSwitch && setSwitch.endsWith('Blinds'))) {
+        } else if (devType.startsWith('Blinds') || devType.startsWith('RFY') || (setSwitch && setSwitch.startsWith('Blinds'))) {
           appliancename.applianceTypes = (['SWITCH'])
           appliancename.actions = ([
             'turnOn',
             'turnOff'
           ])
-          if (devType.startsWith('Inverted'))
+          if (devType.endsWith('Inverted'))
             appliancename.additionalApplianceDetails = ({
               switchis: setSwitch,
               WhatAmI: 'inverted_blind'
